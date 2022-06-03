@@ -1,1 +1,1 @@
-# ps-public-content
+# Sumo Logic PS Content
