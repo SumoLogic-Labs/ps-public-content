@@ -1,5 +1,5 @@
 # Purpose
-`cse_insight_update.py` script can be used to list and update CSE Insights.
+`cse_insights_update.py` script can be used to list and update CSE Insights.
 
 # Variables
 ```
@@ -21,15 +21,15 @@ required arguments:
 # Examples
 ## List (no action) non-closed insights with tag CUSTOM
 ```
-python3 cse_insight_update.py -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -test
+python3 cse_insights_update.py -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -test
 ```
 
 ## Add tag NEWTAG to non-closed insights with tag CUSTOM
 ```
-python3 cse_insight_update.py -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -tag 'NEWTAG'
+python3 cse_insights_update.py -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -tag 'NEWTAG'
 ```
 
 ## Close as "No Action" all non-closed insights with tag CUSTOM, Add tag NEWTAG, add comment, in us2 environment
 ```
-python3 cse_insight_update.py -env=us2 -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -tag 'NEWTAG' -comment 'NEWCOMMENT' -status 'closed' -resolution 'No Action'
+python3 cse_insights_update.py -env=us2 -accessid XXXXX -accesskey XXXXX -filter '-status:"closed" -tag:"CUSTOM"' -tag 'NEWTAG' -comment 'NEWCOMMENT' -status 'closed' -resolution 'No Action'
 ```
