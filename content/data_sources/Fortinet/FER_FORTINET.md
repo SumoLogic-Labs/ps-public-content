@@ -13,6 +13,7 @@ Main Fortinet fields can be extracted using the following FER:
 | parse regex "msg\=\"(?<msg>[^\"]+)\"" nodrop
 | parse regex "policyname\=\"?(?<policyname>[^\"]+)\"?\s*" nodrop
 | parse regex "proto\=(?<proto>\d+)" nodrop
+| parse regex "remip\=(?<remip>[^\s]+)" nodrop
 | parse regex "service\=\"(?<service>[^\"]+)\"" nodrop
 | parse regex "srcip\=(?<srcip>[^\s]+)" nodrop
 | parse regex "srcport\=(?<srcport>\d+)" nodrop
