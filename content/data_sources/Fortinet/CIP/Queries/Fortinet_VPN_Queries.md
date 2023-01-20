@@ -1,4 +1,4 @@
-# Fortinet VON Queries
+# Fortinet VPN Queries
 
 Those queries require the Fortinet FER to be applied.
 Replace `*fortinet*` by correct source category in your environment.
