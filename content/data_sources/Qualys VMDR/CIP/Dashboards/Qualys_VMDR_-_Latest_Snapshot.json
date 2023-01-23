@@ -1,0 +1,366 @@
+{
+    "type": "DashboardV2SyncDefinition",
+    "name": "Qualys VMDR - Latest Snapshot",
+    "description": "",
+    "title": "Qualys VMDR - Latest Snapshot",
+    "theme": "Dark",
+    "topologyLabelMap": {
+        "data": {}
+    },
+    "refreshInterval": 0,
+    "timeRange": {
+        "type": "BeginBoundedTimeRange",
+        "from": {
+            "type": "RelativeTimeRangeBoundary",
+            "relativeTime": "-1d"
+        },
+        "to": null
+    },
+    "layout": {
+        "layoutType": "Grid",
+        "layoutStructures": [
+            {
+                "key": "panel74F8874BB06F6B45",
+                "structure": "{\"height\":5,\"width\":4,\"x\":16,\"y\":0}"
+            },
+            {
+                "key": "panel179E79BDA0F49A4F",
+                "structure": "{\"height\":5,\"width\":4,\"x\":12,\"y\":0}"
+            },
+            {
+                "key": "panelBC17969EBBE3EB45",
+                "structure": "{\"height\":5,\"width\":4,\"x\":8,\"y\":0}"
+            },
+            {
+                "key": "panelE9238955B879C842",
+                "structure": "{\"height\":5,\"width\":4,\"x\":4,\"y\":0}"
+            },
+            {
+                "key": "panel3284175783AA694A",
+                "structure": "{\"height\":5,\"width\":4,\"x\":0,\"y\":0}"
+            },
+            {
+                "key": "panelB4FA1380AD7A1A46",
+                "structure": "{\"height\":5,\"width\":4,\"x\":20,\"y\":0}"
+            },
+            {
+                "key": "panel3F5A7E4CB014F940",
+                "structure": "{\"height\":12,\"width\":12,\"x\":0,\"y\":5}"
+            },
+            {
+                "key": "panel454E5251A746E947",
+                "structure": "{\"height\":14,\"width\":24,\"x\":0,\"y\":17}"
+            },
+            {
+                "key": "panel8B346399B809CB49",
+                "structure": "{\"height\":12,\"width\":12,\"x\":12,\"y\":5}"
+            }
+        ]
+    },
+    "panels": [
+        {
+            "id": null,
+            "key": "panel74F8874BB06F6B45",
+            "title": "CRITICAL",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#6f5acc\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where severity = \"5\"\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel179E79BDA0F49A4F",
+            "title": "HIGH",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#bf2121\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where severity = \"4\"\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelBC17969EBBE3EB45",
+            "title": "MEDIUM",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#f0731f\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where severity = \"3\"\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelE9238955B879C842",
+            "title": "LOW",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#16943E\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where severity = \"2\"\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel3284175783AA694A",
+            "title": "INFORMATIONAL",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#007ca6\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where severity = \"1\"\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelB4FA1380AD7A1A46",
+            "title": "TOTAL",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"label\":\"Vulnerabilities\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"0\",\"hideData\":false,\"hideLabel\":true,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"from\":0,\"to\":null,\"color\":\"#f8f8fa\"},{\"from\":null,\"to\":null,\"color\":\"#DFBE2E\"},{\"from\":null,\"to\":null,\"color\":\"#BF2121\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where severity matches \"{{SEVERITY}}\"\n| where !IsEmpty(severity)\n| count as Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel3F5A7E4CB014F940",
+            "title": "HOSTS SUMMARY",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12}},\"series\":{},\"general\":{\"type\":\"table\",\"displayType\":\"default\",\"paginationPageSize\":100,\"fontSize\":12,\"mode\":\"distribution\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "\n_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where !IsEmpty(severity)\n| where severity matches \"{{SEVERITY}}\"\n\n| \"Unknown\" as severity_label\n| if(severity = 1, \"Informational\", severity_label) as severity_label\n| if(severity = 2, \"Low\", severity_label) as severity_label\n| if(severity = 3, \"Medium\", severity_label) as severity_label\n| if(severity = 4, \"High\", severity_label) as severity_label\n| if(severity = 5, \"Critical\", severity_label) as severity_label\n\n| count as Total ip, hostname, severity, severity_label\n| transpose row ip, hostname column severity, severity_label as %\"1|Informational\", %\"2|Low\", %\"3|Medium\", %\"4|High\", %\"5|Critical\"\n| if(IsNull(%\"1|Informational\"), 0, %\"1|Informational\") as %\"1|Informational\"\n| if(IsNull(%\"2|Low\"), 0, %\"2|Low\") as %\"2|Low\"\n| if(IsNull(%\"3|Medium\"), 0, %\"3|Medium\") as %\"3|Medium\"\n| if(IsNull(%\"4|High\"), 0, %\"4|High\") as %\"4|High\"\n| if(IsNull(%\"5|Critical\"), 0, %\"5|Critical\") as %\"5|Critical\"\n| %\"1|Informational\" + %\"2|Low\" + %\"3|Medium\" + %\"4|High\" + %\"5|Critical\" as %\"Total\"\n\n| order by %\"Total\" desc",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel454E5251A746E947",
+            "title": "DETAILS",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12}},\"series\":{},\"general\":{\"type\":\"table\",\"displayType\":\"default\",\"paginationPageSize\":100,\"fontSize\":12,\"mode\":\"distribution\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where !IsEmpty(severity)\n| where severity matches \"{{SEVERITY}}\"\n\n| \"Unknown\" as severity_label\n| if(severity = 1, \"Informational\", severity_label) as severity_label\n| if(severity = 2, \"Low\", severity_label) as severity_label\n| if(severity = 3, \"Medium\", severity_label) as severity_label\n| if(severity = 4, \"High\", severity_label) as severity_label\n| if(severity = 5, \"Critical\", severity_label) as severity_label\n|where severity in (\"4\",\"5\")\n\n| count as Total ip, hostname, severity, severity_label, type, status, results\n| fields -Total",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel8B346399B809CB49",
+            "title": "VULNERABILITY SUMMARY",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12}},\"series\":{},\"general\":{\"type\":\"table\",\"displayType\":\"default\",\"paginationPageSize\":100,\"fontSize\":12,\"mode\":\"distribution\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=*qualys* AND {{PAYLOAD}} AND {{IP}} AND {{HOSTNAME}}\n| where (_raw matches /^\\{.*\\}$/) \n\n| json \"IP\", \"Hostname\", \"Detection.Qid\" as ip, hostname, Qid nodrop\n| first(_raw) as _raw by ip, hostname, Qid\n\n| json \"Detection\" as vulnerability nodrop\n| where ip matches \"{{IP}}\"\n| where hostname matches \"{{HOSTNAME}}\"\n\n| json auto field=vulnerability nodrop\n| fields -vulnerability\n\n| where !IsEmpty(severity)\n| where severity matches \"{{SEVERITY}}\"\n\n| \"Unknown\" as severity_label\n| if(severity = 1, \"Informational\", severity_label) as severity_label\n| if(severity = 2, \"Low\", severity_label) as severity_label\n| if(severity = 3, \"Medium\", severity_label) as severity_label\n| if(severity = 4, \"High\", severity_label) as severity_label\n| if(severity = 5, \"Critical\", severity_label) as severity_label\n\n|where severity in (\"4\",\"5\")\n| count as Total results, severity, severity_label, hostname\n| count as %\"Distinct Hostnames\" by results, severity, severity_label\n\n| order by %\"Distinct Hostnames\"",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Manual",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        }
+    ],
+    "variables": [
+        {
+            "id": null,
+            "name": "IP",
+            "displayName": "IP",
+            "defaultValue": "*",
+            "sourceDefinition": {
+                "variableSourceType": "LogQueryVariableSourceDefinition",
+                "query": "_sourceCategory=*qualys*\n| json \"IP\", \"Hostname\" as ip, hostname\n| count as Total IP\n| order by IP asc",
+                "field": "ip"
+            },
+            "allowMultiSelect": false,
+            "includeAllOption": true,
+            "hideFromUI": false,
+            "valueType": "Any"
+        },
+        {
+            "id": null,
+            "name": "HOSTNAME",
+            "displayName": "HOSTNAME",
+            "defaultValue": "*",
+            "sourceDefinition": {
+                "variableSourceType": "LogQueryVariableSourceDefinition",
+                "query": "_sourceCategory=*qualys*\n| json \"IP\", \"Hostname\" as ip, hostname\n| count as Total hostname\n| order by hostname asc",
+                "field": "hostname"
+            },
+            "allowMultiSelect": false,
+            "includeAllOption": true,
+            "hideFromUI": false,
+            "valueType": "Any"
+        },
+        {
+            "id": null,
+            "name": "SEVERITY",
+            "displayName": "SEVERITY",
+            "defaultValue": "*",
+            "sourceDefinition": {
+                "variableSourceType": "CsvVariableSourceDefinition",
+                "values": "1,2,3,4,5"
+            },
+            "allowMultiSelect": false,
+            "includeAllOption": true,
+            "hideFromUI": false,
+            "valueType": "Any"
+        },
+        {
+            "id": null,
+            "name": "PAYLOAD",
+            "displayName": "PAYLOAD",
+            "defaultValue": "*",
+            "sourceDefinition": {
+                "variableSourceType": "CsvVariableSourceDefinition",
+                "values": "String,*String*"
+            },
+            "allowMultiSelect": false,
+            "includeAllOption": true,
+            "hideFromUI": false,
+            "valueType": "Any"
+        }
+    ],
+    "coloringRules": []
+}
