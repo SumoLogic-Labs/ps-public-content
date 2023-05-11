@@ -8,17 +8,22 @@
 import argparse
 import json
 import sys
+import time
 import urllib3
 
 # get insights
 def get_insights(insights_filter, http_headers, insights_offset):   
     http = urllib3.PoolManager()
-    request = http.request('GET', "{}sec/v1/insights?q={}&offset={}".format(SUMO_API_URL, insights_filter, insights_offset), headers=http_headers)
-    request_status = request.status
+    while True:
+        request = http.request('GET', "{}sec/v1/insights?q={}&offset={}".format(SUMO_API_URL, insights_filter, insights_offset), headers=http_headers)
+        request_status = request.status
 
-    if request_status != 200:
-        print("Request not accepted. Response code: {}".format(request_status))
-        sys.exit()
+        if request_status == 200:
+            break
+        else:
+            print("Request not accepted. Response code: {}".format(request_status))
+            print("Sleeping and retrying...")
+            time.sleep(1)
 
     payload = json.loads(request.data.decode('utf-8'))
     current_insights = payload['data']['objects']
@@ -31,16 +36,20 @@ def insight_add_tag(id, http_headers, tag):
     data = {"tagName": tag}
 
     http = urllib3.PoolManager()
-    encoded_data =json.dumps(data).encode('utf-8')
+    encoded_data = json.dumps(data).encode('utf-8')
 
-    request = http.request('POST', "{}sec/v1/insights/{}/tags".format(SUMO_API_URL, id), headers=http_headers, body=encoded_data)
-    request_status = request.status
+    while True:
+        request = http.request('POST', "{}sec/v1/insights/{}/tags".format(SUMO_API_URL, id), headers=http_headers, body=encoded_data)
+        request_status = request.status
 
-    if request_status != 200:
-        print("Request not accepted. Response code: {}".format(request_status)) 
-        exit()
-    else:
-        print("\t- Tag added.")
+        if request_status == 200:
+            break
+        else:
+            print("Request not accepted. Response code: {}".format(request_status))
+            print("Sleeping and retrying...")
+            time.sleep(1)
+
+    print("\t- Tag added.")
 
 # comment insight
 def insight_add_comment(id, http_headers, comment):
@@ -49,14 +58,18 @@ def insight_add_comment(id, http_headers, comment):
     http = urllib3.PoolManager()
     encoded_data =json.dumps(data).encode('utf-8')
 
-    request = http.request('POST', "{}sec/v1/insights/{}/comments".format(SUMO_API_URL,id), headers=http_headers, body=encoded_data)
-    request_status = request.status
+    while True:
+        request = http.request('POST', "{}sec/v1/insights/{}/comments".format(SUMO_API_URL,id), headers=http_headers, body=encoded_data)
+        request_status = request.status
 
-    if request_status != 200:
-        print("Request not accepted. Response code: {}".format(request_status))
-        exit()
-    else:
-        print("\t- Comment added.")
+        if request_status == 200:
+            break
+        else:
+            print("Request not accepted. Response code: {}".format(request_status))
+            print("Sleeping and retrying...")
+            time.sleep(1)
+
+    print("\t- Comment added.")
 
 # update insight status
 def insight_update_status(id, http_headers, status, resolution):
@@ -65,14 +78,18 @@ def insight_update_status(id, http_headers, status, resolution):
     http = urllib3.PoolManager()
     encoded_data =json.dumps(data).encode('utf-8')
 
-    request = http.request('PUT', "{}sec/v1/insights/{}/status".format(SUMO_API_URL, id), headers=http_headers, body=encoded_data)
-    request_status = request.status
+    while True:
+        request = http.request('PUT', "{}sec/v1/insights/{}/status".format(SUMO_API_URL, id), headers=http_headers, body=encoded_data)
+        request_status = request.status
 
-    if request_status != 200:
-        print("Request not accepted. Response code: {}".format(request_status))
-        exit()
-    else:
-        print("\t- Insight closed.")
+        if request_status == 200:
+            break
+        else:
+            print("Request not accepted. Response code: {}".format(request_status))
+            print("Sleeping and retrying...")
+            time.sleep(1)
+
+    print("\t- Insight closed.")
 
 # main script
 if __name__ == '__main__':
@@ -156,11 +173,3 @@ if __name__ == '__main__':
         if HAS_NEXT_PAGE is True:
             print("\nLooping to next page...\n")
             OFFSET += 10
-
-
-
-
-
-
-
-
