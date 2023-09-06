@@ -39,6 +39,9 @@
 | if(record_type="IXFR", "Incremental zone transfer record", record_type_description) as record_type_description
 | if(record_type="AXFR", "Standard zone transfer record", record_type_description) as record_type_description
 | if(record_type="All", "All records Domain", record_type_description) as record_type_description
+| if(record_type="TKEY", "Transaction key record", record_type_description) as record_type_description
+| if(record_type="SOA", "Start of authority record", record_type_description) as record_type_description
+| if(record_type="65", "HTTPS resource record", record_type_description) as record_type_description
 
 | "Query" as opcode_description
 | if(opcode="R", "Response", opcode_description) as opcode_description
